@@ -1,0 +1,10 @@
+.radioButton {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.form-check > .form-check-input:checked {
+  background-color: #39395f;
+  border-color: #39395f;
+}

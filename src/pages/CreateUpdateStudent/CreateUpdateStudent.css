@@ -1,0 +1,8 @@
+.go-back-link a {
+  color: #39395f;
+  text-decoration: none;
+}
+
+.go-back-link a:hover {
+  color: #565680;
+}

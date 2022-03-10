@@ -1,38 +1,75 @@
-.App {
-  text-align: center;
+*,
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.title {
+  color: #39395f;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+}
+
+.center-form {
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-items: center;
+  height: 70vh;
+}
+
+.form-control:focus {
+  border-color: #39395f;
+  box-shadow: 0 0 0 0.1rem #39395f;
+}
+
+.textColor,
+.textColor:hover {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.bgColor {
+  background: #39395f;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.buttonSize {
+  width: 100%;
+}
+
+.welcome {
+  padding: 2rem;
+  font-size: 2rem;
+}
+
+.welcome-link a {
+  font-size: 1rem;
+  color: #39395f;
+}
+
+.bgColor:hover {
+  background: #444469;
+}
+
+.Link a {
+  color: #39395f;
+}
+
+.errorMessage {
+  color: red;
+}
+
+.icons-cursor {
+  cursor: pointer;
+}
+
+.departments-button {
+  margin-right: 1rem;
 }

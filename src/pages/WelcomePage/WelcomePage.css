@@ -1,0 +1,14 @@
+.welcome {
+  padding: 2rem;
+  font-size: 232rem;
+}
+
+.welcome a {
+  font-size: 1.2rem;
+  color: #39395f !important;
+  text-decoration: none;
+}
+
+.welcome a:hover {
+  color: black !important;
+}
