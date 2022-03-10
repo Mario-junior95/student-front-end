@@ -3,7 +3,7 @@ import { Container, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 
-import Tree from "../../components/DepartmentTree/Tree";
+import Tree from "../../components/Department/DepartmentTree/Tree";
 import axios from "../../api/axios";
 
 import "./Department.css";

@@ -12,6 +12,8 @@ import UpdateStudent from "./pages/CreateUpdateStudent/UpdateStudent";
 import CreateStudent from "./pages/CreateUpdateStudent/CreateStudent";
 import Department from "./pages/Departments/Department";
 import CreateDepartment from "./pages/Departments/CreateDepartment/CreateDepartment";
+import CreateChildDepartment from "./components/Department/CreateChildDepartment/CreateChildDepartment";
+import UpdateChildDepartment from "./components/Department/UpdateChildDepartment/UpdateChildDepartment";
 import { PublicRoutes, RequireAuth } from "./components/routes/RequireAuth";
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -38,7 +40,18 @@ const App = () => {
           <Route path="/create-student" element={<CreateStudent />} />
           <Route path="/update-student/:id" element={<UpdateStudent />} />
           <Route path="/department" element={<Department />} />
-          <Route path="/create-parent-department" element={<CreateDepartment />} />
+          <Route
+            path="/create-parent-department"
+            element={<CreateDepartment />}
+          />
+          <Route
+            path="/create-child-department/:id"
+            element={<CreateChildDepartment />}
+          />
+          <Route
+            path="/update-child-department/:id"
+            element={<UpdateChildDepartment />}
+          />
         </Route>
 
         {/** Catch All */}

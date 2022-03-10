@@ -40,6 +40,7 @@ const DepartmentForm = (props) => {
             </Form.Group>
           );
         })}
+        test
       <Button
         variant="default"
         className="bgColor textColor mb-4 buttonSize"

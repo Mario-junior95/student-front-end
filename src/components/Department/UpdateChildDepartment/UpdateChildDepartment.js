@@ -1,17 +1,17 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
+
+import DepartmentForm from "../DepartmentForm/DepartmentForm";
 import axios from "../../../api/axios";
 
-import DepartmentForm from "../../../components/Department/DepartmentForm/DepartmentForm";
-
-const BUTTON_NAME = "Create Department";
-
-const CREATE_DEPARTMENT = "/department";
-
-const CreateDepartment = () => {
+const UpdateChildDepartment = () => {
   const errRef = useRef();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const BUTTON_NAME = "Update Child Department";
+  const DEPARTMENT = "/department";
 
   const [departmentInfo, setDepartmentInfo] = useState({
     name: "",
@@ -24,17 +24,47 @@ const CreateDepartment = () => {
 
   const [messageSuccess, setMessageSuccess] = useState("");
 
-  //Create Department
-  const handleCreate = async (e) => {
+  //get All Classes
+  useEffect(() => {
+    let isMounted = true;
+    //AbortController cancel request if component unmount
+    const controller = new AbortController();
+    const getClasses = async () => {
+      try {
+        const response = await axios.get(`${DEPARTMENT}/${id}`);
+        isMounted &&
+          setDepartmentInfo({
+            ...departmentInfo,
+            name: response.data.department[0].name,
+            description: response.data.department[0].description
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getClasses();
+
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, []);
+
+  //Update Department
+  const handleUpdate = async (e) => {
     e.preventDefault();
 
     var data = new FormData();
     data.append("name", departmentInfo.name);
     data.append("description", departmentInfo.description);
-    data.append("parent_id", "");
+    //do it later as dropdown with all parent id to switch between parents and childrens  
+    // data.append("parent_id", ?);
 
     try {
-      const response = await axios.post(CREATE_DEPARTMENT, data);
+      const response = await axios.post(
+        `${DEPARTMENT}/${id}?_method=PUT`,
+        data
+      );
       setMessageSuccess(response.data.message);
       setTimeout(() => {
         navigate("/department", { replace: true });
@@ -96,7 +126,7 @@ const CreateDepartment = () => {
 
   return (
     <Container>
-      <p className="mt-4 title">Create new Parent Department</p>
+      <p className="mt-4 title">Update new Child Department</p>
       <Row className="center-form">
         <Row className="">
           <Col
@@ -111,7 +141,7 @@ const CreateDepartment = () => {
               setDepartmentInfo={setDepartmentInfo}
               buttonName={BUTTON_NAME}
               messageSuccess={messageSuccess}
-              handleSubmitButton={handleCreate}
+              handleSubmitButton={handleUpdate}
               handleButton={handleChange}
             />
             <p>
@@ -126,4 +156,4 @@ const CreateDepartment = () => {
   );
 };
 
-export default CreateDepartment;
+export default UpdateChildDepartment;

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
+import DeleteDepartment from "../DeleteDepartment/DeleteDepartment";
 import "./Tree.css";
 
 const Tree = ({ data = [] }) => {
@@ -15,6 +17,7 @@ const Tree = ({ data = [] }) => {
 };
 
 const TreeNode = ({ node, key }) => {
+  const navigate = useNavigate();
   const [childVisible, setChildVisiblity] = useState(false);
 
   const hasChild = node.childs ? true : false;
@@ -34,7 +37,7 @@ const TreeNode = ({ node, key }) => {
             variant="default"
             className="textColor bgColor departments-button"
             type="submit"
-            //   onClick={()=>navigate('/department')}
+            onClick={() => navigate(`/create-child-department/${node.id}`)}
           >
             Create Child
           </Button>
@@ -42,18 +45,11 @@ const TreeNode = ({ node, key }) => {
             variant="default"
             className="textColor bgColor departments-button"
             type="submit"
-            //   onClick={()=>navigate('/department')}
+            onClick={() => navigate(`/update-child-department/${node.id}`)}
           >
             Update
           </Button>
-          <Button
-            variant="default"
-            className="textColor bgColor"
-            type="submit"
-            //   onClick={()=>navigate('/department')}
-          >
-            Delete
-          </Button>
+          <DeleteDepartment childDepartmentId={node.id} />
         </div>
       </div>
       {hasChild && childVisible && (

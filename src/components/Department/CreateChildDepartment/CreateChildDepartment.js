@@ -1,17 +1,17 @@
 import React, { useState, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
+
+import DepartmentForm from "../DepartmentForm/DepartmentForm";
 import axios from "../../../api/axios";
 
-import DepartmentForm from "../../../components/Department/DepartmentForm/DepartmentForm";
-
-const BUTTON_NAME = "Create Department";
-
-const CREATE_DEPARTMENT = "/department";
-
-const CreateDepartment = () => {
+const CreateChildDepartment = () => {
   const errRef = useRef();
   const navigate = useNavigate();
+  const { id } = useParams();
+
+  const BUTTON_NAME = "Create Child Department";
+  const CREATE_DEPARTMENT = "/department";
 
   const [departmentInfo, setDepartmentInfo] = useState({
     name: "",
@@ -31,7 +31,7 @@ const CreateDepartment = () => {
     var data = new FormData();
     data.append("name", departmentInfo.name);
     data.append("description", departmentInfo.description);
-    data.append("parent_id", "");
+    data.append("parent_id", id);
 
     try {
       const response = await axios.post(CREATE_DEPARTMENT, data);
@@ -126,4 +126,4 @@ const CreateDepartment = () => {
   );
 };
 
-export default CreateDepartment;
+export default CreateChildDepartment;
