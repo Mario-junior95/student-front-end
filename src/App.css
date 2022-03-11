@@ -77,3 +77,7 @@ body {
 .departments-button {
   margin-right: 1rem;
 }
+
+.DeleteButton{
+  background-color: red;
+}

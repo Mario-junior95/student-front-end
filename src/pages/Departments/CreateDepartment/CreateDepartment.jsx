@@ -82,7 +82,10 @@ const CreateDepartment = () => {
       name: "name",
       value: `${departmentInfo.name}`,
       error: typeof errors.name !== "undefined" && `${errors.name}`
-    },
+    }
+  ];
+
+  const textareaData = [
     {
       label: "Description",
       type: "text",
@@ -109,6 +112,7 @@ const CreateDepartment = () => {
               allDepartmentFormData={allDepartmentFormData}
               departmentInfo={departmentInfo}
               setDepartmentInfo={setDepartmentInfo}
+              textareaData={textareaData}
               buttonName={BUTTON_NAME}
               messageSuccess={messageSuccess}
               handleSubmitButton={handleCreate}

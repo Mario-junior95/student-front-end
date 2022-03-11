@@ -1,5 +1,6 @@
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+
 import { Container, Form, Button } from "react-bootstrap";
 
 import { getAllDataStudents } from "../../api/apis";
@@ -14,6 +15,8 @@ const StudentList = () => {
   const navigate = useNavigate();
 
   const [students, setStudents] = useState([]);
+
+  const [render , setRender] = useState(false);
 
   /**Search States */
   const [filterState, setFilterState] = useState({
@@ -47,7 +50,7 @@ const StudentList = () => {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  }, [render]);
 
   useEffect(() => {
     let isMounted = true;
@@ -64,6 +67,7 @@ const StudentList = () => {
               .includes(filterState.search.toLowerCase())
         )
       });
+
     return () => {
       isMounted = false;
     };
@@ -116,10 +120,10 @@ const StudentList = () => {
         </Button>
       </div>
       <ReusableTable
-        // allStudents={students}
-        // allStudents={filterState.filteredData}
         allStudents={currentPostsData}
         headers={headers}
+        setRender={setRender}
+        render={render}
       />
 
       <div className="student">

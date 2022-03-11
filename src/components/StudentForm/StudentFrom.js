@@ -28,15 +28,10 @@ const StudentFrom = (props) => {
     setImage(e.target.files[0]);
   };
 
-  const handleRadio = (e) => {
-    // const { value } = e.target;
+  const ACTIVE = "active";
 
-    // if (value === "active") {
-    //   setIsActive(1);
-    // } else {
-    //   setIsActive(0);
-    // }
-    e.target.checked ? setIsActive(1) : setIsActive(0)
+  const handleRadio = (e) => {
+    e.target.value === ACTIVE ? setIsActive(1) : setIsActive(0);
   };
 
   const { errors } = credentials;
@@ -85,7 +80,7 @@ const StudentFrom = (props) => {
       <Form.Group controlId="kindOfStand" className="mb-4">
         <div className="radioButton">
           <Form.Check
-            value="active"
+            value={ACTIVE}
             type="radio"
             name="active"
             aria-label="radio 1"

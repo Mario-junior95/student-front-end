@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import axios from "../../../api/axios";
 
 const DeleteDepartment = (props) => {
-  const { childDepartmentId} = props;
+  const { childDepartmentId, setRender, render } = props;
   const DEPARTMENT = "/department";
 
   //delete Department By id
@@ -12,6 +12,7 @@ const DeleteDepartment = (props) => {
     await axios
       .delete(`${DEPARTMENT}/${childDepartmentId}`)
       .then((response) => {
+        setRender(!render);
         console.log(response);
       });
   };
@@ -19,7 +20,7 @@ const DeleteDepartment = (props) => {
   return (
     <Button
       variant="default"
-      className="textColor bgColor"
+      className="textColor DeleteButton"
       type="submit"
       onClick={handleDeleteDepartment}
     >

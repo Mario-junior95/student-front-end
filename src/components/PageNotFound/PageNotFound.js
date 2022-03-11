@@ -1,8 +1,8 @@
 import React from "react";
 
+import Warning from "../../assets/icons/WarningIcon.svg";
 import "./PageNotFound.css";
 
-import Warning from "../../assets/icons/WarningIcon.svg";
 
 const PageNotFound = () => {
   return (

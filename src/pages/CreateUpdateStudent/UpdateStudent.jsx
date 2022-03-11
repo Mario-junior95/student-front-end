@@ -1,5 +1,4 @@
-import Cookies from "js-cookie";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -7,8 +6,9 @@ import axios from "../../api/axios";
 import { validate } from "../../validation/validate";
 import StudentFrom from "../../components/StudentForm/StudentFrom";
 
-import "./CreateUpdateStudent.css";
 import Loading from "../../components/Loading/Loading";
+import Loadingcontext from "../../context/LoadingProvider";
+import "./CreateUpdateStudent.css";
 
 const UpdateStudent = () => {
   const navigate = useNavigate();
@@ -36,19 +36,21 @@ const UpdateStudent = () => {
   const [image, setImage] = useState("");
   const [isActive, setIsActive] = useState(1);
   const [messageSuccess, setMessageSuccess] = useState("");
-  const [loading, setLoading] = useState(true);
+
+  const [loading, setLoading] = useContext(Loadingcontext);
 
   //handle multiple api's with one call
   useEffect(() => {
     let isMounted = true;
     //AbortController cancel request if component unmount
     const controller = new AbortController();
+    setLoading(true);
     const getData = () => {
       let endPoints = [`${STUDENT}/${id}`, ALL_CLASSES];
 
       Promise.all(endPoints.map((endpoint) => axios.get(endpoint)))
         .then(([{ data: student }, { data: classes }]) => {
-          console.log(student.data);
+          // console.log(student.data);
           isMounted && setClasses(classes);
           isMounted && setStudentById(student.data);
           isMounted &&
@@ -62,7 +64,7 @@ const UpdateStudent = () => {
           isMounted && setClassId(student.data.class_id);
         })
         .finally(() => {
-          setLoading(false);
+          isMounted && setLoading(false);
         });
     };
 
@@ -73,7 +75,7 @@ const UpdateStudent = () => {
     };
   }, []);
 
-  useEffect(() => {}, [StudentById]);
+  useEffect(() => {}, [StudentById, loading]);
 
   //update student By Id
   const handleUpdate = async (e) => {
@@ -158,7 +160,7 @@ const UpdateStudent = () => {
   };
 
   if (loading) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   return (

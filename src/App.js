@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
 import Cookies from "js-cookie";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Login from "./pages/Login";

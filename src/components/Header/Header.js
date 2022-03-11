@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 import Logout from "../Logout";
@@ -12,17 +11,7 @@ const Header = () => {
       <p className="rounded title icons-cursor" onClick={() => navigate("/")}>
         Logo<sub>Dashboard</sub>
       </p>
-      <div>
-        {/* <Button
-          variant="default"
-          className="textColor bgColor departments-button"
-          type="submit"
-          onClick={() => navigate("/department")}
-        >
-          Departments
-        </Button> */}
-        <Logout />
-      </div>
+      <Logout />
     </div>
   );
 };

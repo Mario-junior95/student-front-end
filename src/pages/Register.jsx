@@ -1,7 +1,8 @@
+import Cookies from "js-cookie";
 import React, { useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
+
 import axios from "../api/axios";
 import AuthForm from "../components/Auth/AuthForm";
 

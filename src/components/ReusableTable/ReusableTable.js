@@ -2,7 +2,7 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
-import {API_URL} from '../../config/index';
+import { API_URL } from "../../config/index";
 import active from "../../assets/icons/active.svg";
 import notActive from "../../assets/icons/notActive.svg";
 import editIcon from "../../assets/icons/EditIcon.svg";
@@ -12,7 +12,7 @@ import DeleteStudent from "./DeleteStudent";
 import "./ReusableTable.css";
 
 const ReusableTable = (props) => {
-  const { allStudents, headers } = props;
+  const { allStudents, headers , render , setRender } = props;
   const navigate = useNavigate();
 
   const ACTIVE = 1;
@@ -38,6 +38,7 @@ const ReusableTable = (props) => {
             allStudents &&
             allStudents?.map((items, key) => {
               const IS_ACTIVE = items.is_active === ACTIVE;
+              const fullName = items.first_name +" "+ items.last_name;
               return (
                 <tr key={key}>
                   <td>
@@ -56,7 +57,9 @@ const ReusableTable = (props) => {
                         src={IS_ACTIVE ? active : notActive}
                         alt={IS_ACTIVE ? "active-icon" : "not active"}
                       />
-                      <span className="active">{IS_ACTIVE ? "active" : "not active"}</span>
+                      <span className="active">
+                        {IS_ACTIVE ? "active" : "not active"}
+                      </span>
                     </div>
                   </td>
                   <td>
@@ -73,6 +76,9 @@ const ReusableTable = (props) => {
                         deleteIcon={deleteIcon}
                         alt={"delete-icon"}
                         studentId={items.id}
+                        render={render}
+                        setRender={setRender}
+                        fullName={fullName}
                       />
                     </div>
                   </td>

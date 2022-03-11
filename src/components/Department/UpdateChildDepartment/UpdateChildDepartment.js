@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
 import DepartmentForm from "../DepartmentForm/DepartmentForm";
-import { getClassById } from "../../../api/apis";
+import { getDepartmentById } from "../../../api/apis";
 import axios from "../../../api/axios";
+import Loadingcontext from "../../../context/LoadingProvider";
 import Loading from "../../Loading/Loading";
 
 const UpdateChildDepartment = () => {
@@ -25,21 +26,23 @@ const UpdateChildDepartment = () => {
   });
 
   const [messageSuccess, setMessageSuccess] = useState("");
-  const [loading , setLoading] = useState(true);
+  const [loading, setLoading] = useContext(Loadingcontext);
 
-  //get All Classes
+
+  //get All Departments
   useEffect(() => {
     let isMounted = true;
     //AbortController cancel request if component unmount
     const controller = new AbortController();
-    const getClasses = getClassById({
+    const getDepartments = getDepartmentById({
       pathname: `${DEPARTMENT}/${id}`,
       isMount: isMounted,
       state: departmentInfo,
       setState: setDepartmentInfo,
       setLoading: setLoading
     });
-    getClasses();
+
+    getDepartments();
 
     return () => {
       isMounted = false;
@@ -54,8 +57,6 @@ const UpdateChildDepartment = () => {
     var data = new FormData();
     data.append("name", departmentInfo.name);
     data.append("description", departmentInfo.description);
-    //do it later as dropdown with all parent id to switch between parents and childrens
-    // data.append("parent_id", ?);
 
     try {
       const response = await axios.post(
@@ -81,7 +82,6 @@ const UpdateChildDepartment = () => {
             );
             errors[convertToCamelCase] = arrayOfErrors[key].toString();
           });
-
           console.log(errors);
           setDepartmentInfo({ ...departmentInfo, errors });
         }
@@ -109,7 +109,10 @@ const UpdateChildDepartment = () => {
       name: "name",
       value: `${departmentInfo.name}`,
       error: typeof errors.name !== "undefined" && `${errors.name}`
-    },
+    }
+  ];
+
+  const textareaData = [
     {
       label: "Description",
       type: "text",
@@ -121,8 +124,8 @@ const UpdateChildDepartment = () => {
     }
   ];
 
-  if(loading){
-    return <Loading/>
+  if (loading) {
+    return <Loading />;
   }
 
   return (
@@ -139,6 +142,7 @@ const UpdateChildDepartment = () => {
             <DepartmentForm
               allDepartmentFormData={allDepartmentFormData}
               departmentInfo={departmentInfo}
+              textareaData={textareaData}
               setDepartmentInfo={setDepartmentInfo}
               buttonName={BUTTON_NAME}
               messageSuccess={messageSuccess}

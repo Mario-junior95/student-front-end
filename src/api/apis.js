@@ -41,7 +41,10 @@ const getClassById = (props) => {
           name: response.data.department[0].name,
           description: response.data.department[0].description
         });
-      setLoading(false);
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     } catch (error) {
       console.log(error);
     }
@@ -50,14 +53,31 @@ const getClassById = (props) => {
 
 //get All departments
 const getAllDeparments = (props) => {
-  const { pathName, setState , setLoading } = props;
+  const { pathName, setState, setLoading } = props;
 
+  return async () => {
+    try {
+      await axios
+        .get(pathName)
+        .then((response) => {
+          setState(response.data.parents);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+//get departments name and id
+const getDeparmentsNameAndId = (props) => {
+  const { pathName, setState } = props;
   return async () => {
     try {
       await axios.get(pathName).then((response) => {
         setState(response.data.parents);
-      }).finally(() => {
-        setLoading(false);
       });
     } catch (error) {
       console.log(error);
@@ -65,4 +85,32 @@ const getAllDeparments = (props) => {
   };
 };
 
-export { getAllDataStudents, getAllClasses, getClassById, getAllDeparments };
+//get departments by id
+const getDepartmentById = (props) => {
+  const { pathname, isMount, state, setState, setLoading } = props;
+  return async () => {
+    try {
+      const response = await axios.get(pathname);
+      isMount &&
+        setState({
+          ...state,
+          name: response.data.department[0].name,
+          description: response.data.department[0].description,
+        });
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+export {
+  getAllDataStudents,
+  getAllClasses,
+  getClassById,
+  getAllDeparments,
+  getDepartmentById,
+  getDeparmentsNameAndId
+};

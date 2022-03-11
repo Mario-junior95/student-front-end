@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
+
 import DeleteDepartment from "../DeleteDepartment/DeleteDepartment";
 import "./Tree.css";
 
 const Tree = (props) => {
-  const { data = [] } = props;
+  const { data = [] , setRender  , render} = props;
   return (
     <div>
       <ul className="icons-cursor">
         {data.map((tree, key) => (
-          <TreeNode node={tree} key={key} />
+          <TreeNode node={tree} key={key} setRender={setRender} render={render}/>
         ))}
       </ul>
     </div>
@@ -18,7 +19,7 @@ const Tree = (props) => {
 };
 
 const TreeNode = (props) => {
-  const { node, key } = props;
+  const { node, key , setRender , render } = props;
 
   const navigate = useNavigate();
   const [childVisible, setChildVisiblity] = useState(false);
@@ -27,14 +28,14 @@ const TreeNode = (props) => {
 
   return (
     <li className="department-list" key={key}>
-      <div onClick={(e) => setChildVisiblity((v) => !v)}>
-        <div className="col d-tree-head">
+      <div>
+        <div className="col d-tree-head" onClick={(e) => setChildVisiblity((v) => !v)}>
           <b className="parent-department">{node.name}</b>
           <p>
-            <b>Slug:</b> {node.slug}
+            <b>{"1-"}Slug:</b> {node.slug}
           </p>
           <p>
-            <b>Description:</b> {node.description}
+            <b>{"2-"}Description:</b> {node.description}
           </p>
           <Button
             variant="default"
@@ -52,7 +53,7 @@ const TreeNode = (props) => {
           >
             Update
           </Button>
-          <DeleteDepartment childDepartmentId={node.id} />
+          <DeleteDepartment childDepartmentId={node.id} setRender={setRender} render={render}/>
         </div>
       </div>
       {hasChild && childVisible && (

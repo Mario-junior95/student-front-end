@@ -82,7 +82,10 @@ const CreateChildDepartment = () => {
       name: "name",
       value: `${departmentInfo.name}`,
       error: typeof errors.name !== "undefined" && `${errors.name}`
-    },
+    }
+  ];
+
+  const textareaData = [
     {
       label: "Description",
       type: "text",
@@ -96,7 +99,7 @@ const CreateChildDepartment = () => {
 
   return (
     <Container>
-      <p className="mt-4 title">Create new Parent Department</p>
+      <p className="mt-4 title">Create new Child Department</p>
       <Row className="center-form">
         <Row className="">
           <Col
@@ -108,6 +111,7 @@ const CreateChildDepartment = () => {
             <DepartmentForm
               allDepartmentFormData={allDepartmentFormData}
               departmentInfo={departmentInfo}
+              textareaData={textareaData}
               setDepartmentInfo={setDepartmentInfo}
               buttonName={BUTTON_NAME}
               messageSuccess={messageSuccess}

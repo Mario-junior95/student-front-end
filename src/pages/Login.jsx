@@ -1,5 +1,5 @@
 import Cookies from "js-cookie";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -8,7 +8,6 @@ import AuthForm from "../components/Auth/AuthForm";
 
 const Login = () => {
   const errRef = useRef();
-
   const navigate = useNavigate();
 
   const [credentials, setCredentials] = useState({
@@ -21,6 +20,8 @@ const Login = () => {
   });
 
   const LOGIN_URL = "/auth/login";
+
+  const [errorMsg , setErrorMsg] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -38,7 +39,7 @@ const Login = () => {
 
       navigate("/welcome-page", { replace: true });
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.error);
       if (error?.response) {
         const errorCode = error.response.data.code;
         const arrayOfErrors = error.response.data.error;
@@ -53,7 +54,8 @@ const Login = () => {
 
           setCredentials({ ...credentials, errors });
         } else {
-          setCredentials({ ...credentials, errors });
+          // setCredentials({ ...credentials, errors });
+          setErrorMsg(arrayOfErrors);
         }
       }
       errRef.current.focus();
@@ -101,6 +103,7 @@ const Login = () => {
               handleButton={handleLogin}
               formsAuthData={formsAuthData}
               buttonName={BUTTON_NAME}
+              errorMsg={errorMsg}
             />
             <p>
               Need an Account?

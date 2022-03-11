@@ -2,8 +2,6 @@ import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 
 import { validate } from "../../validation/validate";
-// import { validate } from "@/components/validate";
-
 
 const AuthForm = (props) => {
   const {
@@ -11,7 +9,8 @@ const AuthForm = (props) => {
     credentials,
     setCredentials,
     handleButton,
-    buttonName
+    buttonName,
+    errorMsg
   } = props;
 
   const handleChange = (event) => {
@@ -24,9 +23,9 @@ const AuthForm = (props) => {
   };
   return (
     <Form>
-        {/* <Alert variant="danger" show={formsAuthData?.errors.length > 0 ? true : false}>
-          {formsAuthData.errors}
-        </Alert> */}
+      <Alert variant="danger" show={errorMsg?.length > 0 ? true : false}>
+        {errorMsg}
+      </Alert>
       {formsAuthData &&
         formsAuthData?.map((val, key) => {
           const handleRefFocus = key === 0;
