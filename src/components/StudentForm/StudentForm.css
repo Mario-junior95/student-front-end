@@ -5,6 +5,6 @@
 }
 
 .form-check > .form-check-input:checked {
-  background-color: #39395f;
-  border-color: #39395f;
+  background-color: var(--mainColor);
+  border-color: var(--mainColor);
 }

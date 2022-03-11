@@ -4,7 +4,8 @@ import { Button } from "react-bootstrap";
 import DeleteDepartment from "../DeleteDepartment/DeleteDepartment";
 import "./Tree.css";
 
-const Tree = ({ data = [] }) => {
+const Tree = (props) => {
+  const { data = [] } = props;
   return (
     <div>
       <ul className="icons-cursor">
@@ -16,7 +17,9 @@ const Tree = ({ data = [] }) => {
   );
 };
 
-const TreeNode = ({ node, key }) => {
+const TreeNode = (props) => {
+  const { node, key } = props;
+
   const navigate = useNavigate();
   const [childVisible, setChildVisiblity] = useState(false);
 

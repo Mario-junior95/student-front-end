@@ -1,13 +1,13 @@
 .page-item.active .page-link {
-  background-color: #39395f !important;
+  background-color: var(--mainColor) !important;
   border-color: white !important;
   cursor: pointer;
 }
 
 .page-link:active {
-  color: #39395f !important;
+  color: var(--mainColor) !important;
 }
 
 .page-link:hover {
-  color: #39395f !important;
+  color: var(--mainColor) !important;
 }

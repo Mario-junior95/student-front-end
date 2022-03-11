@@ -1,5 +1,5 @@
 .go-back-link a {
-  color: #39395f;
+  color: var(--mainColor);
   text-decoration: none;
 }
 

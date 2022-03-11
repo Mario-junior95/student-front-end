@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "../../../api/axios";
 
+import axios from "../../../api/axios";
 import DepartmentForm from "../../../components/Department/DepartmentForm/DepartmentForm";
 
 const BUTTON_NAME = "Create Department";

@@ -13,13 +13,11 @@ const Logout = () => {
 
   const handleLogout = async () => {
     try {
-      await axios
-        .get(LOGOUT)
-        .then((response) => {
-          Cookies.remove("token");
-          Cookies.remove("firstname");
-          navigate("/");
-        });
+      await axios.get(LOGOUT).then((response) => {
+        Cookies.remove("token");
+        Cookies.remove("firstname");
+        navigate("/");
+      });
     } catch (error) {
       console.log(error);
     }

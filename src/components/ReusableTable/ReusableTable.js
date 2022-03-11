@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
+import {API_URL} from '../../config/index';
 import active from "../../assets/icons/active.svg";
 import notActive from "../../assets/icons/notActive.svg";
 import editIcon from "../../assets/icons/EditIcon.svg";
@@ -41,7 +42,7 @@ const ReusableTable = (props) => {
                 <tr key={key}>
                   <td>
                     <img
-                      src={`http://localhost:8000/storage/${items.image}`}
+                      src={`${API_URL}/storage/${items.image}`}
                       alt="student_profile"
                     />
                   </td>

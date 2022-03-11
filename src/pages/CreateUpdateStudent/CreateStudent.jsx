@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import StudentFrom from "../../components/StudentForm/StudentFrom";
 import { validate } from "../../validation/validate";
+import { getAllClasses } from "../../api/apis";
 
 import axios from "../../api/axios";
 import "./CreateUpdateStudent.css";
@@ -41,14 +42,8 @@ const CreateStudent = () => {
     let isMounted = true;
     //AbortController cancel request if component unmount
     const controller = new AbortController();
-    const getClasses = async () => {
-      try {
-        const response = await axios.get(ALL_CLASSES);
-        isMounted && setClasses(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    
+    const getClasses = getAllClasses({pathname:ALL_CLASSES , isMount:isMounted , setState:setClasses});
     getClasses();
 
     return () => {

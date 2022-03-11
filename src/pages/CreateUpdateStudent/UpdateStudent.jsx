@@ -8,6 +8,7 @@ import { validate } from "../../validation/validate";
 import StudentFrom from "../../components/StudentForm/StudentFrom";
 
 import "./CreateUpdateStudent.css";
+import Loading from "../../components/Loading/Loading";
 
 const UpdateStudent = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const UpdateStudent = () => {
   const [image, setImage] = useState("");
   const [isActive, setIsActive] = useState(1);
   const [messageSuccess, setMessageSuccess] = useState("");
-  const [loading , setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   //handle multiple api's with one call
   useEffect(() => {
@@ -45,8 +46,8 @@ const UpdateStudent = () => {
     const getData = () => {
       let endPoints = [`${STUDENT}/${id}`, ALL_CLASSES];
 
-      Promise.all(endPoints.map((endpoint) => axios.get(endpoint))).then(
-        ([{ data: student }, { data: classes }]) => {
+      Promise.all(endPoints.map((endpoint) => axios.get(endpoint)))
+        .then(([{ data: student }, { data: classes }]) => {
           console.log(student.data);
           isMounted && setClasses(classes);
           isMounted && setStudentById(student.data);
@@ -59,8 +60,10 @@ const UpdateStudent = () => {
             });
           isMounted && setIsActive(student.data.is_active);
           isMounted && setClassId(student.data.class_id);
-        }
-      );
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     };
 
     getData();
@@ -70,11 +73,7 @@ const UpdateStudent = () => {
     };
   }, []);
 
-
-  useEffect(() => {
- 
-  }, [StudentById])
-
+  useEffect(() => {}, [StudentById]);
 
   //update student By Id
   const handleUpdate = async (e) => {
@@ -89,7 +88,7 @@ const UpdateStudent = () => {
     data.append("is_active", isActive);
 
     try {
-      const response = await axios.post(`${STUDENT}/${id}?_method=PUT`, data)
+      const response = await axios.post(`${STUDENT}/${id}?_method=PUT`, data);
       setMessageSuccess(response.data.message);
       setTimeout(() => {
         navigate("/student", { replace: true });
@@ -158,7 +157,10 @@ const UpdateStudent = () => {
     setAuthMsg(false);
   };
 
-  {loading && <p>Loading.....</p>}
+  if (loading) {
+    return <Loading/>;
+  }
+
   return (
     <Container>
       <p className="mt-4 title">Create new Student</p>

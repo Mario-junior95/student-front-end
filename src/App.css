@@ -7,8 +7,12 @@ body {
   height: auto;
 }
 
+:root {
+  --mainColor: #39395f;
+}
+
 .title {
-  color: #39395f;
+  color: var(--mainColor);
   font-weight: bold;
   font-size: 1.5rem;
 }
@@ -27,8 +31,8 @@ body {
 }
 
 .form-control:focus {
-  border-color: #39395f;
-  box-shadow: 0 0 0 0.1rem #39395f;
+  border-color: var(--mainColor);
+  box-shadow: 0 0 0 0.1rem var(--mainColor);
 }
 
 .textColor,
@@ -37,7 +41,7 @@ body {
 }
 
 .bgColor {
-  background: #39395f;
+  background: var(--mainColor);
 }
 
 .buttonSize {
@@ -51,7 +55,7 @@ body {
 
 .welcome-link a {
   font-size: 1rem;
-  color: #39395f;
+  color: var(--mainColor);
 }
 
 .bgColor:hover {
@@ -59,7 +63,7 @@ body {
 }
 
 .Link a {
-  color: #39395f;
+  color: var(--mainColor);
 }
 
 .errorMessage {

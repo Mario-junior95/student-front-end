@@ -3,7 +3,9 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useNavigate, useParams, Link } from "react-router-dom";
 
 import DepartmentForm from "../DepartmentForm/DepartmentForm";
+import { getClassById } from "../../../api/apis";
 import axios from "../../../api/axios";
+import Loading from "../../Loading/Loading";
 
 const UpdateChildDepartment = () => {
   const errRef = useRef();
@@ -23,25 +25,20 @@ const UpdateChildDepartment = () => {
   });
 
   const [messageSuccess, setMessageSuccess] = useState("");
+  const [loading , setLoading] = useState(true);
 
   //get All Classes
   useEffect(() => {
     let isMounted = true;
     //AbortController cancel request if component unmount
     const controller = new AbortController();
-    const getClasses = async () => {
-      try {
-        const response = await axios.get(`${DEPARTMENT}/${id}`);
-        isMounted &&
-          setDepartmentInfo({
-            ...departmentInfo,
-            name: response.data.department[0].name,
-            description: response.data.department[0].description
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    };
+    const getClasses = getClassById({
+      pathname: `${DEPARTMENT}/${id}`,
+      isMount: isMounted,
+      state: departmentInfo,
+      setState: setDepartmentInfo,
+      setLoading: setLoading
+    });
     getClasses();
 
     return () => {
@@ -57,7 +54,7 @@ const UpdateChildDepartment = () => {
     var data = new FormData();
     data.append("name", departmentInfo.name);
     data.append("description", departmentInfo.description);
-    //do it later as dropdown with all parent id to switch between parents and childrens  
+    //do it later as dropdown with all parent id to switch between parents and childrens
     // data.append("parent_id", ?);
 
     try {
@@ -123,6 +120,10 @@ const UpdateChildDepartment = () => {
         typeof errors.description !== "undefined" && `${errors.description}`
     }
   ];
+
+  if(loading){
+    return <Loading/>
+  }
 
   return (
     <Container>

@@ -3,7 +3,6 @@ import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 
-// import { getUser } from "../services/LoginUser";
 import axios from "../api/axios";
 import AuthForm from "../components/Auth/AuthForm";
 
@@ -38,7 +37,6 @@ const Login = () => {
       Cookies.set("fullName", FullName, { expires: 10 });
 
       navigate("/welcome-page", { replace: true });
-    
     } catch (error) {
       console.log(error);
       if (error?.response) {

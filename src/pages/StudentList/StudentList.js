@@ -1,12 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 
-import axios from "../../api/axios";
+import { getAllDataStudents } from "../../api/apis";
 import ReusableTable from "../../components/ReusableTable/ReusableTable";
+import CustomPagination from "../../components/Pagination/CustomPagination";
 
 import "./StudentList.css";
-import CustomPagination from "../../components/Pagination/CustomPagination";
 
 const ALL_STUDENTS = "/student";
 
@@ -33,16 +33,10 @@ const StudentList = () => {
     indexOfLastPost
   );
 
-  //get all Students
-  const getAllStudents = async () => {
-    try {
-      await axios.get(ALL_STUDENTS).then((response) => {
-        setStudents(response.data.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const getAllStudents = getAllDataStudents({
+    pathname: ALL_STUDENTS,
+    setState: setStudents
+  });
 
   useEffect(() => {
     let isMounted = true;
@@ -97,7 +91,7 @@ const StudentList = () => {
   return (
     <Container className="mt-5">
       <h2>Students List</h2>
-      <div className="student-search-create">
+      <div className="student">
         <Form.Group className="mb-4" controlId="formBasicText">
           <Form.Control
             type="text"
@@ -128,14 +122,21 @@ const StudentList = () => {
         headers={headers}
       />
 
-      {filterState.filteredData?.length !== 0 && (
-        <CustomPagination
-          postsPerPage={postsPerPage}
-          totalPosts={students.length}
-          currentPage={currentPage}
-          paginate={paginate}
-        />
-      )}
+      <div className="student">
+        {filterState.filteredData?.length !== 0 && (
+          <CustomPagination
+            postsPerPage={postsPerPage}
+            totalPosts={students.length}
+            currentPage={currentPage}
+            paginate={paginate}
+          />
+        )}
+        <p>
+          <span className="go-back-link">
+            <Link to="/department">Go To Departments Page{" > "}</Link>
+          </span>
+        </p>
+      </div>
     </Container>
   );
 };

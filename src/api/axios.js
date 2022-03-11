@@ -1,8 +1,8 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-// import history from "./history";
+import { API_URL } from "../config";
 
-const BASE_URL = "http://localhost:8000/api";
+const BASE_URL = `${API_URL}/api`;
 
 axios.defaults.baseURL = BASE_URL;
 
