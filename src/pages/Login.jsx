@@ -15,13 +15,13 @@ const Login = () => {
     password: "",
     errors: {
       email: "",
-      password: ""
-    }
+      password: "",
+    },
   });
 
   const LOGIN_URL = "/auth/login";
 
-  const [errorMsg , setErrorMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -72,7 +72,7 @@ const Login = () => {
       autoComplete: "off",
       name: "email",
       value: `${credentials.email}`,
-      error: typeof errors.email !== "undefined" && `${errors.email}`
+      error: typeof errors.email !== "undefined" && `${errors.email}`,
     },
     {
       label: "Password",
@@ -81,8 +81,8 @@ const Login = () => {
       autoComplete: "off",
       name: "password",
       value: `${credentials.password}`,
-      error: typeof errors.password !== "undefined" && `${errors.password}`
-    }
+      error: typeof errors.password !== "undefined" && `${errors.password}`,
+    },
   ];
 
   const BUTTON_NAME = "Sign In";

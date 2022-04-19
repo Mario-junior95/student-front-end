@@ -1,92 +1,37 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-
-import { API_URL } from "../../config/index";
-import active from "../../assets/icons/active.svg";
-import notActive from "../../assets/icons/notActive.svg";
-import editIcon from "../../assets/icons/EditIcon.svg";
-import deleteIcon from "../../assets/icons/DeleteIcon.svg";
-import DeleteStudent from "./DeleteStudent";
 
 import "./ReusableTable.css";
 
 const ReusableTable = (props) => {
-  const { allStudents, headers , render , setRender } = props;
-  const navigate = useNavigate();
-
-  const ACTIVE = 1;
-
-  const updateStudent = (path) => {
-    navigate(path);
-  };
-
+  const { allData, headers , errorMessage } = props;
   return (
     <div className="table-outer">
       <Table striped bordered hover>
         <thead>
           <tr>
-            {headers?.length &&
-              headers &&
-              headers?.map((headerItem, key) => {
-                return <th key={key}>{headerItem}</th>;
-              })}
+            {headers.map((head, key) => (
+              <th key={key}>{head.display}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {allStudents?.length ? (
-            allStudents &&
-            allStudents?.map((items, key) => {
-              const IS_ACTIVE = items.is_active === ACTIVE;
-              const fullName = items.first_name +" "+ items.last_name;
+          {allData?.length ? (
+            allData?.map((data, dataIndex) => {
               return (
-                <tr key={key}>
-                  <td>
-                    <img
-                      src={`${API_URL}/storage/${items.image}`}
-                      alt="student_profile"
-                    />
-                  </td>
-                  <td>{items.first_name}</td>
-                  <td>{items.last_name}</td>
-                  <td>{items.date_of_birth}</td>
-                  <td>{items.classes?.name}</td>
-                  <td>
-                    <div className="icon-container">
-                      <img
-                        src={IS_ACTIVE ? active : notActive}
-                        alt={IS_ACTIVE ? "active-icon" : "not active"}
-                      />
-                      <span className="active">
-                        {IS_ACTIVE ? "active" : "not active"}
-                      </span>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="container-cell">
-                      <img
-                        src={editIcon}
-                        alt="edit-icon"
-                        className="icons-cursor"
-                        onClick={() => {
-                          updateStudent(`/update-student/${items.id}`);
-                        }}
-                      />
-                      <DeleteStudent
-                        deleteIcon={deleteIcon}
-                        alt={"delete-icon"}
-                        studentId={items.id}
-                        render={render}
-                        setRender={setRender}
-                        fullName={fullName}
-                      />
-                    </div>
-                  </td>
+                <tr key={dataIndex}>
+                  {headers.map((header, headerIndex) => {
+                    return (
+                      <td key={headerIndex}>
+                        <span>{data[header.key]}</span>
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })
           ) : (
-            <p className="errorMessage">No Students to display</p>
+            <p className="errorMessage">{errorMessage}</p>
           )}
         </tbody>
       </Table>

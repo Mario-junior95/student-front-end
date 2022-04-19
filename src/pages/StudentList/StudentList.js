@@ -7,21 +7,33 @@ import { getAllDataStudents } from "../../api/apis";
 import ReusableTable from "../../components/ReusableTable/ReusableTable";
 import CustomPagination from "../../components/Pagination/CustomPagination";
 
+import active from "../../assets/icons/active.svg";
+import notActive from "../../assets/icons/notActive.svg";
+
+import editIcon from "../../assets/icons/EditIcon.svg";
+import deleteIcon from "../../assets/icons/DeleteIcon.svg";
+import DeleteStudent from "../../components/ReusableTable/DeleteStudent";
+
 import "./StudentList.css";
+import { API_URL } from "../../config";
 
 const ALL_STUDENTS = "/student";
 
 const StudentList = () => {
   const navigate = useNavigate();
 
+  const updateStudent = (path) => {
+    navigate(path);
+  };
+
   const [students, setStudents] = useState([]);
 
-  const [render , setRender] = useState(false);
+  const [render, setRender] = useState(false);
 
   /**Search States */
   const [filterState, setFilterState] = useState({
     filteredData: [],
-    search: ""
+    search: "",
   });
 
   /**Pagination States */
@@ -36,9 +48,88 @@ const StudentList = () => {
     indexOfLastPost
   );
 
+  const headers = [
+    {
+      display: "Image",
+      key: "image",
+    },
+    {
+      display: "First Name",
+      key: "first_name",
+    },
+    {
+      display: "Last Name",
+      key: "last_name",
+    },
+    {
+      display: "Date Of Birth",
+      key: "date_of_birth",
+    },
+    {
+      display: "Is Active",
+      key: "is_active",
+    },
+    {
+      display: "",
+      key: "",
+    },
+  ];
+
+  function buildStudentsDataRow() {
+    return (
+      currentPostsData &&
+      currentPostsData.map((val) => {
+        let post = { ...val };
+        post[""] = "";
+
+        const IS_ACTIVE = val.is_active === 1;
+        const fullName = val.first_name + " " + val.last_name;
+
+        post.image = (
+          <img src={`${API_URL}/storage/${val.image}`} alt="error image" />
+        );
+
+        post.is_active = (
+          <div className="icon-container">
+            <img
+              src={IS_ACTIVE ? active : notActive}
+              alt={IS_ACTIVE ? "active-icon" : "not active"}
+            />
+            <span className="active">
+              {IS_ACTIVE ? "active" : "not active"}
+            </span>
+          </div>
+        );
+
+        post[""] = (
+          <div className="container-cell">
+            <img
+              src={editIcon}
+              alt="edit-icon"
+              className="icons-cursor"
+              onClick={() => {
+                updateStudent(`/update-student/${val.id}`);
+              }}
+            />
+            <DeleteStudent
+              deleteIcon={deleteIcon}
+              alt={"delete-icon"}
+              studentId={val.id}
+              render={render}
+              setRender={setRender}
+              fullName={fullName}
+            />
+          </div>
+        );
+
+        return post;
+      })
+    );
+  }
+
   const getAllStudents = getAllDataStudents({
     pathname: ALL_STUDENTS,
-    setState: setStudents
+    setState: setStudents,
   });
 
   useEffect(() => {
@@ -65,7 +156,7 @@ const StudentList = () => {
             student.last_name
               .toLowerCase()
               .includes(filterState.search.toLowerCase())
-        )
+        ),
       });
 
     return () => {
@@ -81,16 +172,6 @@ const StudentList = () => {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
-  const headers = [
-    "Profile",
-    "First Name",
-    "Last Name",
-    "Date Of Birth",
-    "Classes",
-    "Active",
-    ""
-  ];
 
   return (
     <Container className="mt-5">
@@ -119,11 +200,11 @@ const StudentList = () => {
           Create Student
         </Button>
       </div>
+
       <ReusableTable
-        allStudents={currentPostsData}
+        allData={buildStudentsDataRow()}
         headers={headers}
-        setRender={setRender}
-        render={render}
+        errorMessage={"No Students to display"}
       />
 
       <div className="student">
